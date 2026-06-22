@@ -155,6 +155,26 @@ z |>
 
 ::: grid-card
 
+```{r distribucion_playa,echo=FALSE}
+z |>
+    dplyr::filter(IDE_EDA_ANO <= 12 | IDE_EDA_ANO >= 65) |>
+    dplyr::mutate(onset = FEC_INI_SIGNOS_SINT) |>
+    dplyr::select(ANO, long, lat, onset) |>
+    dplyr::mutate(x = long,
+                  y = lat) |>
+    sf::st_as_sf(coords = c("x", "y"),
+                 crs = 4326) |>
+    mp_dengue_cases(yrs = 2026,
+                    locality = "Playa del Carmen",
+                    cve_edo = "23")
+
+
+```
+:::
+
+
+::: grid-card
+
 ```{r distribucion_cozumel,echo=FALSE}
 z |>
     dplyr::filter(IDE_EDA_ANO <= 12 | IDE_EDA_ANO >= 65) |>
@@ -211,6 +231,23 @@ z |>
 ```
 :::
 
+
+::: grid-card
+```{r heatmap_playa,echo=FALSE}
+z |>
+    dplyr::filter(IDE_EDA_ANO <= 12 | IDE_EDA_ANO >= 65) |>
+    dplyr::mutate(onset = FEC_INI_SIGNOS_SINT) |>
+    dplyr::select(ANO, long, lat, onset) |>
+    dplyr::mutate(x = long,
+                  y = lat) |>
+    sf::st_as_sf(coords = c("x", "y"),
+                 crs = 4326) |>
+  mp_heatmap(yrs = 2026,
+           cve_edo = "23",
+           locality = "Playa del Carmen")
+
+```
+:::
 
 ::: grid-card
 ```{r heatmap_cozumel,echo=FALSE}
@@ -272,6 +309,34 @@ z |>
 ```
 :::
 
+
+::: grid-card
+
+```{r chains_playa,echo=FALSE}
+z |>
+    #dplyr::filter(IDE_EDA_ANO <= 12 | IDE_EDA_ANO >= 65) |>
+    dplyr::mutate(onset = FEC_INI_SIGNOS_SINT) |>
+    dplyr::select(ANO, long, lat, onset) |>
+    dplyr::mutate(x = long,
+                  y = lat) |>
+    sf::st_as_sf(coords = c("x", "y"),
+                 crs = 4326) |>
+    mp_transmission_chains(yrs = 2026,
+                           locality = "Playa del Carmen",
+                           cve_edo = "23")
+
+```
+:::
+
+::: grid-card
+
+```{r chains_cozumel,echo=FALSE}
+rgeomex::extract_locality(locality = "Cozumel",
+                           cve_edo = "23") |>
+  mapview::mapview()
+
+```
+:::
 
 
 
